@@ -1,0 +1,61 @@
+disable_service heat,h-api,h-api-cfn,h-api-cw,h-eng
+HOST_IP=<IP-of-Control-Node>
+FLAT_INTERFACE=eth0
+MULTI_HOST=True
+
+# Neutron
+PRIVATE_NETWORK_NAME=net1
+PUBLIC_NETWORK_NAME=ext_net
+Q_PLUGIN=ml2
+Q_ML2_PLUGIN_MECHANISM_DRIVERS=opendaylight,logger
+ENABLE_TENANT_TUNNELS=True
+enable_service odl-server odl-compute
+ODL_BOOT_WAIT=20
+This tells DevStack to look for ODL running on an external host
+#ODL_MGR_IP=<External-IP>
+
+disable_service n-net
+enable_service neutron q-svc q-agt
+enable_service q-dhcp
+enable_service q-l3
+enable_service q-meta
+enable_service q-lbaas
+enable_service q-fwaas
+
+# Heat
+disable_service heat,h-api,h-api-cfn,h-api-cw,h-eng
+
+# Ceilometer
+#enable_service ceilometer-acompute ceilometer-acentral ceilometer-collector ce$
+#CEILOMETER_BACKEND=mongo
+
+# Swift
+#enable_service s-proxy s-object s-container s-account
+
+# Database backend
+#disable_service mysql
+#enable_service postgresql
+
+# Disable default enabled services
+#disable_service cinder c-sch c-api c-vol
+#disable_service tempest
+#disable_service horizon
+
+# Keystone
+#KEYSTONE_TOKEN_FORMAT=UUID
+
+# Devstack configurations
+LOGDIR=$DEST/logs
+SCREEN_LOGDIR=$LOGDIR
+LOGFILE=$LOGDIR/devstack.log
+
+ADMIN_PASSWORD=password
+MYSQL_PASSWORD=password
+RABBIT_PASSWORD=password
+SERVICE_PASSWORD=$ADMIN_PASSWORD
+SERVICE_TOKEN=password
+
+IMAGE_URLS=http://download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-uec.tar.gz
+
+#OFFLINE=True
+#RECLONE=True
